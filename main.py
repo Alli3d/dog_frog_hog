@@ -15,6 +15,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import confusion_matrix
 import seaborn as sn
+import pandas as pd
 import pickle
 
 img1 = cv2.imread('test_images/hog1.jpeg')
@@ -24,7 +25,6 @@ img_dirs = []
 for entry in os.scandir('picdata/'):
     if entry.is_dir():
         img_dirs.append(entry.path)
-print(img_dirs)
 
 for img_dir in img_dirs:
     animals = img_dir.split('/')[-1]
@@ -49,8 +49,8 @@ def w2d(img, mode='haar', level=1):
     imArray_H=pywt.waverec2(coeffs_H, mode)
     imArray_H *= 255
     imArray_H = np.uint8(imArray_H)
-
     return imArray_H
+
 
 def categorise_with_pic_names(dir):
     allpics = (os.walk(dir))
@@ -128,7 +128,6 @@ model_params = {
 
 scores = []
 best_estimators = {}
-import pandas as pd
 
 for algo, mp in model_params.items():
     pipe = make_pipeline(StandardScaler(), mp['model'])
