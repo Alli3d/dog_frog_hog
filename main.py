@@ -15,6 +15,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import confusion_matrix
 import seaborn as sn
+import pickle
 
 img1 = cv2.imread('test_images/hog1.jpeg')
 # i know it's showing a warning but try and run it anyways lol
@@ -28,8 +29,6 @@ print(img_dirs)
 for img_dir in img_dirs:
     animals = img_dir.split('/')[-1]
     print(animals)
-
-
 
 def w2d(img, mode='haar', level=1):
     imArray = img
@@ -158,3 +157,6 @@ sn.heatmap(cm, annot=True)
 plt.xlabel('Predicted')
 plt.ylabel('Truth')
 plt.show()
+
+with open('dogfroghog.pickle', 'wb') as f:
+    pickle.dump(best_clf, f)
